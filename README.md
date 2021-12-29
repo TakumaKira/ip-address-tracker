@@ -1,3 +1,62 @@
+# Frontend Mentor - IP address tracker solution
+
+This is a solution to the [IP address tracker challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ip-address-tracker-I8-0yYAH0). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+
+## Table of contents
+
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+
+## Overview
+
+### The challenge
+
+Users should be able to:
+
+- View the optimal layout for each page depending on their device's screen size
+- See hover states for all interactive elements on the page
+- See their own IP address on the map on the initial page load
+- Search for any IP addresses or domains and see the key information and location
+
+### Screenshot
+
+![](./screenshot.jpg)
+
+### Links
+
+- Solution URL: [GitHub](https://github.com/TakumaKira/ip-address-tracker)
+- Live Site URL: [Vercel](https://ip-address-tracker-3jzpgc973-takumakira.vercel.app/)
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- Flexbox
+- [React](https://reactjs.org/) - JS library
+- [Styled Components](https://styled-components.com/) - For styles
+- Storybook
+- Jest
+- Cypress
+
+### What I learned
+
+### Useful resources
+
+- [Storybook for React tutorial](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/) - This is a great tutorial to learn how Storybook helps Component Driven Development.
+
+## Author
+
+- Website - [TakumaKira@GitHub](https://github.com/TakumaKira)
+- Frontend Mentor - [@TakumaKira](https://www.frontendmentor.io/profile/TakumaKira)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
