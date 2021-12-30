@@ -2,3 +2,17 @@ body {
   margin: 0;
   font-family: 'Rubik', sans-serif;
 }
+
+input {
+  border: none;
+  font-family: inherit;
+  font-size: 18px;
+}
+textarea:focus, input:focus{
+  outline: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}

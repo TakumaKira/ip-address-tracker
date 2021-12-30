@@ -1,3 +1,6 @@
 {
-  "title": "IP Address Tracker"
+  "title": "IP Address Tracker",
+  "labels": {
+    "PLACEHOLDER": "Search for any IP address or domain"
+  }
 }
