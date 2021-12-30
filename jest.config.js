@@ -6,7 +6,8 @@ const config = {
     "!**/node_modules/**",
     "!**/vendor/**",
     "!src/index.js",
-    "!src/reportWebVitals.js"
+    "!src/reportWebVitals.js",
+    "!src/**/*.stories.{js,jsx}"
   ]
 };
 
