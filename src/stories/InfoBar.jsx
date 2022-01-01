@@ -27,8 +27,8 @@ const Container = styled.div`
   }
 `;
 
-const InfoBar = ({ip, location, timezone, isp}) => (
-  <Container>
+const InfoBar = ({ip, location, timezone, isp, className}) => (
+  <Container className={className}>
     <Info title={config.labels.IP} data={ip} />
     <Info title={config.labels.LOCATION} data={location} />
     <Info title={config.labels.TIMEZONE} data={timezone} />

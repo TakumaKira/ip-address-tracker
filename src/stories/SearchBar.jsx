@@ -8,7 +8,7 @@ const Container = styled.div`
     width: 327px;
   }
   @media screen and (min-width: 1120px) {
-    width: 1110px;
+    width: 555px;
   }
   border-radius: 15px;
   overflow: hidden;
@@ -43,8 +43,8 @@ const Icon = styled.img.attrs(props => ({
   src: iconArrow
 }))``;
 
-const SearchBar = () => (
-  <Container>
+const SearchBar = ({ className }) => (
+  <Container className={className}>
     <Input />
     <Button>
       <Icon />
