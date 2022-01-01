@@ -11,7 +11,13 @@ const PureTitle = ({ className }) =>
  */
 const StyledTitle = styled(PureTitle)`
   color: #FFFFFF;
-  font-size: 32px;
+  font-weight: 500;
+  @media screen and (max-width: 1120px) {
+    font-size: 26px;
+  }
+  @media screen and (min-width: 1120px) {
+    font-size: 32px;
+  }
 `;
 
 export default StyledTitle;

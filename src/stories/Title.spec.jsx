@@ -12,6 +12,6 @@ it(`should render title with H1 tag`, () => {
 });
 
 it(`should have distinct color`, () => {
-  const titleElem = renderer.create(<Title />).toJSON()
-  expect(titleElem).toHaveStyleRule('color', '#FFFFFF')
+  const titleElem = renderer.create(<Title />).toJSON();
+  expect(titleElem).toHaveStyleRule('color', '#FFFFFF');
 });
