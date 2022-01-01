@@ -22,10 +22,11 @@ const Input = styled.input.attrs(props => ({
 }))`
   flex-grow: 1;
   color: #2C2C2C;
+  padding-left: 24px;
   &::placeholder {
     opacity: 0.5;
     @media screen and (max-width: 1120px) {
-      font-size: 15px;
+      font-size: 14px;
     }
   }
 `;
