@@ -1,6 +1,10 @@
 {
   "title": "IP Address Tracker",
   "labels": {
-    "PLACEHOLDER": "Search for any IP address or domain"
+    "PLACEHOLDER": "Search for any IP address or domain",
+    "IP": "IP Address",
+    "LOCATION": "Location",
+    "TIMEZONE": "Timezone",
+    "ISP": "ISP"
   }
 }
