@@ -4,10 +4,10 @@ import iconArrow from './assets/icon-arrow.svg';
 
 const Container = styled.div`
   height: 58px;
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
     width: 327px;
   }
-  @media screen and (min-width: 1120px) {
+  @media screen and (min-width: ${config.responsiveSplitWidth}px) {
     width: 555px;
   }
   border-radius: 15px;
@@ -25,7 +25,7 @@ const Input = styled.input.attrs(props => ({
   padding-left: 24px;
   &::placeholder {
     opacity: 0.5;
-    @media screen and (max-width: 1120px) {
+    @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
       font-size: 14px;
     }
   }

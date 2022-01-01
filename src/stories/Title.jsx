@@ -12,10 +12,10 @@ const PureTitle = ({ className }) =>
 const StyledTitle = styled(PureTitle)`
   color: #FFFFFF;
   font-weight: 500;
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
     font-size: 26px;
   }
-  @media screen and (min-width: 1120px) {
+  @media screen and (min-width: ${config.responsiveSplitWidth}px) {
     font-size: 32px;
   }
 `;

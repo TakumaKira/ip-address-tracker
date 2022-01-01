@@ -6,5 +6,6 @@
     "LOCATION": "Location",
     "TIMEZONE": "Timezone",
     "ISP": "ISP"
-  }
+  },
+  "responsiveSplitWidth": 1150
 }

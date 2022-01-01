@@ -7,11 +7,11 @@ const Container = styled.div`
   display: flex;
   background-color: #FFFFFF;
   border-radius: 15px;
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
     flex-direction: column;
     width: 327px;
   }
-  @media screen and (min-width: 1120px) {
+  @media screen and (min-width: ${config.responsiveSplitWidth}px) {
     flex-direction: row;
     width: 1110px;
     & > *:not(:first-child)::before {

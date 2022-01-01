@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import config from './config.json';
 import patternBgUrl from './stories/assets/pattern-bg.png';
+import Header from './stories/Header.jsx';
 
 const Container = styled.div`
   height: 100vh;
@@ -11,18 +13,20 @@ const HeaderBg = styled.div`
   background: url(${patternBgUrl});
   background-repeat: no-repeat;
   background-size: cover;
-  height: 280px;
+  @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
+    height: 300px;
+  }
+  @media screen and (min-width: ${config.responsiveSplitWidth}px) {
+    height: 280px;
+  }
   width: 100vw;
 `;
 
-const HeaderContainer = styled.div`
+const StyledHeader = styled(Header)`
   position: fixed;
-  height: 350px;
-  width: 80vw;
   left: 50%;
   transform: translateX(-50%);
   top: 33px;
-  background-color: grey;
 `;
 
 const Map = styled.div`
@@ -34,9 +38,7 @@ function App() {
   return (
     <Container>
       <HeaderBg />
-      <HeaderContainer>
-        
-      </HeaderContainer>
+      <StyledHeader />
       <Map />
     </Container>
   );
