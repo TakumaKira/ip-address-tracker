@@ -4,7 +4,7 @@ import Title from './Title';
 
 it(`should render Title, SearchBar and InfoBar components`, () => {
   const ip = '192.212.174.101';
-  const location = 'Brooklyn; NY 10001';
+  const location = 'Brooklyn, NY 10001';
   const timezone = 'UTC -05:00';
   const isp = 'SpaceX Starlink';
   const renderer = new ShallowRenderer();
