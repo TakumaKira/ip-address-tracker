@@ -32,7 +32,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [GitHub](https://github.com/TakumaKira/ip-address-tracker)
-- Live Site URL: [Vercel](https://ip-address-tracker-3jzpgc973-takumakira.vercel.app/)
+- Live Site URL: [Vercel](https://ip-address-tracker-git-master-takumakira.vercel.app/)
 
 ## My process
 
