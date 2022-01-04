@@ -1,12 +1,15 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import loadMap from './map';
+import locationIcon from '../stories/assets/icon-location.svg';
 jest.mock('@googlemaps/js-api-loader');
 
 let mockMapFn;
+let mockMarkerFn;
 let mockLoad;
 
 beforeEach(() => {
   mockMapFn = jest.fn();
+  mockMarkerFn = jest.fn();
   mockLoad = jest.fn();
   Loader.mockReturnValue({
     load: mockLoad
@@ -14,9 +17,12 @@ beforeEach(() => {
 });
 
 it(`should call map API and resolve when network error does not occurs`, async () => {
+  const map = { map: 'map' };
+  mockMapFn.mockReturnValue(map);
   mockLoad.mockResolvedValue({
     maps: {
-      Map: mockMapFn
+      Map: mockMapFn,
+      Marker: mockMarkerFn
     }
   });
   const elem = <div></div>;
@@ -24,7 +30,7 @@ it(`should call map API and resolve when network error does not occurs`, async (
   const lng = 150.644;
   const zoom = 8;
   const resolved = jest.fn();
-  loadMap(elem, lat, lng, zoom)
+  loadMap(elem, lat, lng, zoom, locationIcon)
     .then(() => resolved());
   expect(Loader).toBeCalledWith({ apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY });
   await new Promise(process.nextTick);
@@ -32,6 +38,11 @@ it(`should call map API and resolve when network error does not occurs`, async (
     center: { lat, lng },
     zoom,
     disableDefaultUI: true,
+  });
+  expect(mockMarkerFn).toBeCalledWith({
+    position: { lat, lng },
+    map,
+    icon: locationIcon,
   });
   expect(resolved).toBeCalledTimes(1);
 });

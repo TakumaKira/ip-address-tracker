@@ -8,7 +8,8 @@ beforeEach(() => {
   const mockLoad = jest.fn();
   mockLoad.mockResolvedValue({
     maps: {
-      Map: function() {}
+      Map: function() {},
+      Marker: function() {},
     }
   });
   Loader.mockReturnValue({

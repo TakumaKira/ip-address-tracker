@@ -1,7 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
-export default function loadMap(elem, lat, lng, zoom) {
+export default function loadMap(elem, lat, lng, zoom, icon) {
   const promise = new Promise((resolve, reject) => {
     const loader = new Loader({
       apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
@@ -9,10 +9,15 @@ export default function loadMap(elem, lat, lng, zoom) {
   
     loader.load()
       .then(google => {
-        new google.maps.Map(elem, {
+        const map = new google.maps.Map(elem, {
           center: { lat, lng },
           zoom,
           disableDefaultUI: true,
+        });
+        new google.maps.Marker({
+          position: { lat, lng },
+          map,
+          icon
         });
         resolve();
       })
@@ -31,4 +36,5 @@ loadMap.propTypes = {
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
+  icon: PropTypes.string,
 };
