@@ -5,7 +5,8 @@
     "IP": "IP Address",
     "LOCATION": "Location",
     "TIMEZONE": "Timezone",
-    "ISP": "ISP"
+    "ISP": "ISP",
+    "GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE": "Google Maps server is not available"
   },
   "responsiveSplitWidth": 1150
 }

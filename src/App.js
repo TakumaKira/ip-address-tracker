@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import config from './config.json';
 import patternBgUrl from './stories/assets/pattern-bg.png';
-import Header from './stories/Header.jsx';
+import Header from './stories/Header';
+import Map from './stories/Map';
 
 const Container = styled.div`
   height: 100vh;
@@ -29,17 +30,16 @@ const StyledHeader = styled(Header)`
   top: 33px;
 `;
 
-const Map = styled.div`
+const StyledMap = styled(Map)`
   flex-grow: 1;
-  background-color: yellow;
 `;
 
 function App() {
   return (
     <Container>
       <HeaderBg />
+      <StyledMap />
       <StyledHeader />
-      <Map />
     </Container>
   );
 }
