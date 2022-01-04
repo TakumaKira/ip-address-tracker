@@ -14,3 +14,11 @@ Sample.args = {
   timezone: 'UTC -05:00',
   isp: 'SpaceX Starlink',
 };
+
+export const Empty = Template.bind({});
+Empty.args = {
+  ip: '',
+  location: '',
+  timezone: '',
+  isp: '',
+};

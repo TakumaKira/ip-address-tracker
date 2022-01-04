@@ -22,3 +22,7 @@ button {
   border: none;
   cursor: pointer;
 }
+
+span:empty:before {
+  content: "\200b"; /* Fill span with unicode zero width space character */
+}
