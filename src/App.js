@@ -1,5 +1,7 @@
+import React from 'react';
 import styled from 'styled-components';
 import config from './config.json';
+import getLocation from './services/location';
 import patternBgUrl from './stories/assets/pattern-bg.png';
 import Header from './stories/Header';
 import Map from './stories/Map';
@@ -35,11 +37,33 @@ const StyledMap = styled(Map)`
 `;
 
 function App() {
+  const [ location, setLocation ] = React.useState({});
+
+  React.useEffect(() => {
+    (async function() {
+      try {
+        const newLocation = await getLocation();
+        setLocation(newLocation);
+        console.log(newLocation);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
   return (
     <Container>
       <HeaderBg />
-      <StyledMap />
-      <StyledHeader />
+      <StyledMap lat={location.lat} lng={location.lng} />
+      <StyledHeader
+        ip={location.ip}
+        isp={location.isp}
+        city={location.city}
+        country={location.country}
+        postalCode={location.postalCode}
+        region={location.region}
+        timezone={location.timezone}
+      />
     </Container>
   );
 }

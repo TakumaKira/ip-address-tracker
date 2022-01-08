@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import Title from './Title';
-import SearchBar from './SearchBar';
-import InfoBar from './InfoBar';
 import config from '../config.json';
+import formatLocation from '../services/formatLocation';
+import formatTimezone from '../services/formatTimezone';
+import InfoBar from './InfoBar';
+import SearchBar from './SearchBar';
+import Title from './Title';
 
 const Container = styled.div`
   display: flex;
@@ -28,16 +30,16 @@ export const StyledInfoBar = styled(InfoBar)`
   }
 `;
 
-const ip = '192.212.174.101';
-const location = 'Brooklyn, NY 10001';
-const timezone = 'UTC -05:00';
-const isp = 'SpaceX Starlink';
-
-const Header = ({ className }) => (
+const Header = ({ ip, isp, city, country, postalCode, region, timezone, className }) => (
   <Container className={className}>
     <Title />
     <StyledSearchBar />
-    <StyledInfoBar ip={ip} location={location} timezone={timezone} isp={isp} />
+    <StyledInfoBar
+      ip={ip}
+      location={formatLocation(city, country, postalCode, region)}
+      timezone={formatTimezone(timezone)}
+      isp={isp}
+    />
   </Container>
 );
 
