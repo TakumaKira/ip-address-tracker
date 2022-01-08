@@ -1,8 +1,9 @@
 import React from 'react';
 import ShallowRenderer from 'react-test-renderer/shallow';
+import config from '../config.json';
 import * as MapClass from '../services/map';
+import ErrorComponent from './Error';
 import Map, { MapContainer, REFETCH_TIME } from './Map';
-import MapError from './MapError';
 
 let realUseEffect;
 let mockUseEffect;
@@ -58,7 +59,8 @@ it(`should render MapError when network error occurs then retry fetching`, async
   expect(mockLoadFn).toBeCalledTimes(1);
   await new Promise(resolve => realSetTimeout(() => resolve())); // somehow process.nextTick doesn't work here
   const { type: type1, props: props1 } = renderer.getRenderOutput();
-  expect(type1).toEqual(MapError);
+  expect(type1).toEqual(ErrorComponent);
+  expect(props1.message).toBe(config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE);
   expect(props1.className).toBe(className);
   expect(mockSetTimeout).toHaveBeenCalledTimes(1);
   expect(mockSetTimeout).toHaveBeenLastCalledWith(expect.any(Function), REFETCH_TIME);
@@ -90,4 +92,13 @@ it(`should create mapObj then call mapObj.load only after valid lat and lng is p
   renderer.render(<Map lat={34.398} lng={-150.644} />);
   expect(mockMapClass).toBeCalledTimes(1);
   expect(mockLoadFn).toBeCalledTimes(1);
+});
+
+it(`should render IPify server error message and not request map if locationError is true`, () => {
+  const renderer = new ShallowRenderer();
+  renderer.render(<Map lat={undefined} lng={undefined} locationError={true} />);
+  const { type: type1, props: props1 } = renderer.getRenderOutput();
+  expect(type1).toEqual(ErrorComponent);
+  expect(props1.message).toBe(config.labels.IPify_SERVER_IS_NOT_AVAILABLE);
+  expect(mockMapClass).not.toBeCalled();
 });

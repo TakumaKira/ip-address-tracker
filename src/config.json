@@ -6,7 +6,8 @@
     "LOCATION": "Location",
     "TIMEZONE": "Timezone",
     "ISP": "ISP",
-    "GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE": "Google Maps server is not available"
+    "GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE": "Google Maps server is not available",
+    "IPify_SERVER_IS_NOT_AVAILABLE": "IPify server is not available"
   },
   "responsiveSplitWidth": 1150
 }

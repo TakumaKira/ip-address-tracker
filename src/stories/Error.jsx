@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import config from '../config.json';
 
 const Container = styled.div`
   background-color: #e8eaed;
@@ -10,9 +9,9 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const MapError = ({ className }) =>
+const Error = ({ message, className }) =>
   <Container className={className}>
-    <span>{config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE}</span>
+    <span>{message}</span>
   </Container>;
 
-export default MapError;
+export default Error;

@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import MapClass from '../services/map';
 import locationIcon from './assets/icon-location.svg';
-import MapError from './MapError';
+import Error from './Error';
+import config from '../config.json';
 
 export const REFETCH_TIME = 1000;
 
@@ -11,10 +12,10 @@ export const MapContainer = styled.div`
   background-color: #e8eaed;
 `;
 
-const Map = ({ lat, lng, className }) => {
+const Map = ({ lat, lng, className, locationError }) => {
   const mapContainer = React.useRef(null);
   const mapObj = React.useRef(null);
-  const [hasError, setHasError] = React.useState(false);
+  const [mapError, setMapError] = React.useState(false);
   const [errorFetchedChecker, setErrorFetchedChecker] = React.useState(false);
 
   React.useEffect(() => {
@@ -26,9 +27,9 @@ const Map = ({ lat, lng, className }) => {
     }
     mapObj.current = new MapClass(mapContainer.current, lat, lng, 8, locationIcon);
     mapObj.current.load()
-      .then(() => setHasError(false))
+      .then(() => setMapError(false))
       .catch(err => {
-        setHasError(true);
+        setMapError(true);
         mapObj.current = null;
         setTimeout(() => setErrorFetchedChecker(c => !c), REFETCH_TIME);
       });
@@ -41,9 +42,12 @@ const Map = ({ lat, lng, className }) => {
     mapObj.current.setGeo(lat, lng);
   }, [lat, lng]);
 
-  return(!hasError
+  return((!mapError && !locationError)
     ? <MapContainer ref={mapContainer} className={className}></MapContainer>
-    : <MapError className={className} />
+    : <Error
+        className={className}
+        message={locationError ? config.labels.IPify_SERVER_IS_NOT_AVAILABLE : config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE}
+      />
   )
 };
 
@@ -51,6 +55,7 @@ Map.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
   className: PropTypes.string,
+  locationError: PropTypes.bool,
 };
 
 export default Map;

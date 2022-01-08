@@ -38,14 +38,15 @@ const StyledMap = styled(Map)`
 
 function App() {
   const [ location, setLocation ] = React.useState({});
+  const [ locationError, setLocationError ] = React.useState(false);
 
   React.useEffect(() => {
     (async function() {
       try {
         const newLocation = await getLocation();
         setLocation(newLocation);
-        console.log(newLocation);
       } catch (error) {
+        setLocationError(true);
         console.error(error);
       }
     })();
@@ -54,7 +55,7 @@ function App() {
   return (
     <Container>
       <HeaderBg />
-      <StyledMap lat={location.lat} lng={location.lng} />
+      <StyledMap lat={location.lat} lng={location.lng} locationError={locationError} />
       <StyledHeader
         ip={location.ip}
         isp={location.isp}
