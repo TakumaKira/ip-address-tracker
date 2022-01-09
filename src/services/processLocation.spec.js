@@ -2,25 +2,32 @@ import processLocation from './processLocation';
 
 it(`should return processed object`, () => {
   const location = {
-    ip: '192.212.174.101',
+    ip: '8.8.8.8',
     location: {
       country: 'US',
       region: 'California',
-      city: 'South San Gabriel',
-      lat: 34.04915,
-      lng: -118.09462,
-      postalCode: '',
-      timezone: '-08:00',
-      geonameId: 5397771
+      city: 'Mountain View',
+      lat: 37.40599,
+      lng: -122.078514,
+      postalCode: '94043',
+      timezone: '-07:00',
+      geonameId: 5375481
     },
+    domains: [
+      '0d2.net',
+      '003725.com',
+      '0f6.b0094c.cn',
+      '007515.com',
+      '0guhi.jocose.cn'
+    ],
     as: {
-      asn: 7127,
-      name: 'SCE',
-      route: '192.212.0.0/15',
-      domain: '',
-      type: ''
+      asn: 15169,
+      name: 'Google LLC',
+      route: '8.8.8.0/24',
+      domain: 'https://about.google/intl/en/',
+      type: 'Content'
     },
-    isp: 'Southern California Edison'
+    isp: 'Google LLC'
   };
   const processedLocation = {
     ip: location.ip,

@@ -1,5 +1,8 @@
+import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import config from '../config.json';
+import getLocation from '../services/location';
 import iconArrow from './assets/icon-arrow.svg';
 
 const Container = styled.div`
@@ -10,10 +13,12 @@ const Container = styled.div`
   @media screen and (min-width: ${config.responsiveSplitWidth}px) {
     width: 555px;
   }
+  background-color: #FFFFFF;
   border-radius: 15px;
   overflow: hidden;
 
   display: flex;
+  align-items: center;
 `;
 
 const Input = styled.input.attrs(props => ({
@@ -31,8 +36,14 @@ const Input = styled.input.attrs(props => ({
   }
 `;
 
+const Error = styled.span`
+  color: red;
+  margin-right: 10px;
+`;
+
 const Button = styled.button`
   width: 58px;
+  height: 100%;
   background-color: hsl(0, 0%, 17%);
   &:hover {
     background-color: hsl(0, 0%, 59%);
@@ -43,13 +54,48 @@ const Icon = styled.img.attrs(props => ({
   src: iconArrow
 }))``;
 
-const SearchBar = ({ className }) => (
-  <Container className={className}>
-    <Input />
-    <Button>
-      <Icon />
-    </Button>
-  </Container>
-);
+const SearchBar = ({ setLocation, setLocationError, className }) => {
+  const [inputValue, setInputValue] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
+
+  const handleInput = e => {
+    setErrorMessage('');
+    setInputValue(e.target.value);
+  };
+  const handleClick = async () => {
+    if (!inputValue) {
+      return;
+    }
+    try {
+      const newLocation = await getLocation(inputValue);
+      setLocation(newLocation);
+      setLocationError(false);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
+
+  return (
+    <Container className={className}>
+      <Input
+        onChange={handleInput}
+        onKeyUp={e => e.key === 'Enter' && handleClick()}
+      />
+      {errorMessage && <Error>{errorMessage}</Error>}
+      <Button
+        onClick={handleClick}
+      >
+        <Icon />
+      </Button>
+    </Container>
+  )
+};
+
+SearchBar.propTypes = {
+  setLocation: PropTypes.func,
+  setLocationError: PropTypes.func,
+  className: PropTypes.string,
+}
 
 export default SearchBar;

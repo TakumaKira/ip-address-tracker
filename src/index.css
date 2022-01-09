@@ -11,6 +11,7 @@ h1 {
 
 input {
   border: none;
+  background-color: transparent;
   font-family: inherit;
   font-size: 18px;
 }

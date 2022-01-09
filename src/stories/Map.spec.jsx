@@ -3,7 +3,7 @@ import ShallowRenderer from 'react-test-renderer/shallow';
 import config from '../config.json';
 import * as MapClass from '../services/map';
 import ErrorComponent from './Error';
-import Map, { MapContainer, REFETCH_TIME } from './Map';
+import Map, { MapContainer } from './Map';
 
 let realUseEffect;
 let mockUseEffect;
@@ -32,16 +32,13 @@ it(`should render MapContainer when network error does not occur`, async () => {
   renderer.render(<Map lat={34.397} lng={-150.644} className={className} />);
   expect(mockLoadFn).toBeCalled();
   await new Promise(process.nextTick);
-  const { type, props } = renderer.getRenderOutput();
-  expect(type).toEqual(MapContainer);
-  expect(props.className).toBe(className);
+  const { props: { children: [mapComponent, errorComponent] } } = renderer.getRenderOutput();
+  expect(mapComponent.type).toEqual(MapContainer);
+  expect(mapComponent.props.className).toBe(className);
+  expect(errorComponent).toBe(undefined);
 });
 
 it(`should render MapError when network error occurs then retry fetching`, async () => {
-  const realSetTimeout = global.setTimeout;
-  jest.useFakeTimers();
-  const mockSetTimeout = jest.spyOn(global, 'setTimeout');
-  mockSetTimeout.mockImplementation(fn => realSetTimeout(() => fn()));
   const mockLoadFn = jest.fn();
   const error = new Error('test network error');
   mockLoadFn.mockResolvedValue();
@@ -52,25 +49,28 @@ it(`should render MapError when network error occurs then retry fetching`, async
     setGeo: mockSetGeo,
   };
   mockMapClass.mockImplementation(() => mockMapObj);
+  let lat = 34.397;
+  let lng = -150.644;
   const className = 'a';
   const renderer = new ShallowRenderer();
-  renderer.render(<Map lat={34.397} lng={-150.644} className={className} />);
+  renderer.render(<Map lat={lat} lng={lng} className={className} />);
   expect(mockMapClass).toBeCalledTimes(1);
   expect(mockLoadFn).toBeCalledTimes(1);
-  await new Promise(resolve => realSetTimeout(() => resolve())); // somehow process.nextTick doesn't work here
-  const { type: type1, props: props1 } = renderer.getRenderOutput();
-  expect(type1).toEqual(ErrorComponent);
-  expect(props1.message).toBe(config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE);
-  expect(props1.className).toBe(className);
-  expect(mockSetTimeout).toHaveBeenCalledTimes(1);
-  expect(mockSetTimeout).toHaveBeenLastCalledWith(expect.any(Function), REFETCH_TIME);
-  await new Promise(resolve => realSetTimeout(() => resolve())); // somehow process.nextTick doesn't work here
+  await new Promise(resolve => setTimeout(() => resolve())); // somehow process.nextTick doesn't work here
+  const { props: { children: [mapComponent1, errorComponent1] } } = renderer.getRenderOutput();
+  expect(mapComponent1.props.style.display).toBe('none');
+  expect(errorComponent1.type).toEqual(ErrorComponent);
+  expect(errorComponent1.props.message).toBe(config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE);
+  expect(errorComponent1.props.className).toBe(className);
+  renderer.render(<Map lat={lat} lng={lng + 1} className={className} />);
+  await new Promise(resolve => resolve()); // somehow process.nextTick doesn't work here
   expect(mockMapClass).toBeCalledTimes(2);
   expect(mockLoadFn).toBeCalledTimes(2);
-  expect(mockSetTimeout).toHaveBeenCalledTimes(1);
-  const { type: type2, props: props2 } = renderer.getRenderOutput();
-  expect(type2).toEqual(MapContainer);
-  expect(props2.className).toBe(className);
+  const { props: { children: [mapComponent2, errorComponent2] } } = renderer.getRenderOutput();
+  expect(mapComponent2.type).toEqual(MapContainer);
+  expect(mapComponent2.props.className).toBe(className);
+  expect(mapComponent2.props.style.display).not.toBe('none');
+  expect(errorComponent2).toBe(undefined);
 });
 
 it(`should create mapObj then call mapObj.load only after valid lat and lng is passed`, () => {
@@ -95,10 +95,13 @@ it(`should create mapObj then call mapObj.load only after valid lat and lng is p
 });
 
 it(`should render IPify server error message and not request map if locationError is true`, () => {
+  const className = 'a';
   const renderer = new ShallowRenderer();
-  renderer.render(<Map lat={undefined} lng={undefined} locationError={true} />);
-  const { type: type1, props: props1 } = renderer.getRenderOutput();
-  expect(type1).toEqual(ErrorComponent);
-  expect(props1.message).toBe(config.labels.IPify_SERVER_IS_NOT_AVAILABLE);
+  renderer.render(<Map lat={undefined} lng={undefined} locationError={true} className={className} />);
+  const { props: { children: [mapComponent, errorComponent] } } = renderer.getRenderOutput();
+  expect(mapComponent.props.style.display).toBe('none');
+  expect(errorComponent.type).toEqual(ErrorComponent);
+  expect(errorComponent.props.message).toBe(config.labels.IPify_SERVER_IS_NOT_AVAILABLE);
+  expect(errorComponent.props.className).toBe(className);
   expect(mockMapClass).not.toBeCalled();
 });

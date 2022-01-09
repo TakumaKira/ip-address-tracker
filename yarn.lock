@@ -8332,6 +8332,11 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+ip-validator@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/ip-validator/-/ip-validator-0.0.1.tgz#659eb6001d38c35beab51455a2f751b843299eb5"
+  integrity sha1-ZZ62AB04w1vqtRRVovdRuEMpnrU=
+
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -8715,6 +8720,13 @@ is-unicode-supported@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz#3f26c76a809593b52bfa2ecb5710ed2779b522a7"
   integrity sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==
+
+is-valid-domain@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/is-valid-domain/-/is-valid-domain-0.1.5.tgz#38b00f8fb70778b650c71356915a184321d22609"
+  integrity sha512-ilzfGo1kXzoVpSLplJWOexoiuAc6mRK+vPlNAeEPVJ29RagETpCz0izg6CZfY72DCuA+PCrEAEJeaecRLMNq5Q==
+  dependencies:
+    punycode "^2.1.1"
 
 is-weakref@^1.0.1:
   version "1.0.2"

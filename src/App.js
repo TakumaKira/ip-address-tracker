@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const HeaderBg = styled.div`
+export const HeaderBg = styled.div`
   background: url(${patternBgUrl});
   background-repeat: no-repeat;
   background-size: cover;
@@ -25,14 +25,14 @@ const HeaderBg = styled.div`
   width: 100vw;
 `;
 
-const StyledHeader = styled(Header)`
+export const StyledHeader = styled(Header)`
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
   top: 33px;
 `;
 
-const StyledMap = styled(Map)`
+export const StyledMap = styled(Map)`
   flex-grow: 1;
 `;
 
@@ -55,7 +55,11 @@ function App() {
   return (
     <Container>
       <HeaderBg />
-      <StyledMap lat={location.lat} lng={location.lng} locationError={locationError} />
+      <StyledMap
+        lat={location.lat}
+        lng={location.lng}
+        locationError={locationError}
+      />
       <StyledHeader
         ip={location.ip}
         isp={location.isp}
@@ -64,6 +68,8 @@ function App() {
         postalCode={location.postalCode}
         region={location.region}
         timezone={location.timezone}
+        setLocation={setLocation}
+        setLocationError={setLocationError}
       />
     </Container>
   );

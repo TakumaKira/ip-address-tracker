@@ -1,22 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+import config from '../config.json';
 import MapClass from '../services/map';
 import locationIcon from './assets/icon-location.svg';
 import Error from './Error';
-import config from '../config.json';
-
-export const REFETCH_TIME = 1000;
 
 export const MapContainer = styled.div`
   background-color: #e8eaed;
 `;
 
-const Map = ({ lat, lng, className, locationError }) => {
+const Map = (props) => {
+  const { lat, lng, className, locationError } = props;
   const mapContainer = React.useRef(null);
   const mapObj = React.useRef(null);
   const [mapError, setMapError] = React.useState(false);
-  const [errorFetchedChecker, setErrorFetchedChecker] = React.useState(false);
 
   React.useEffect(() => {
     if (mapObj.current) {
@@ -31,9 +29,8 @@ const Map = ({ lat, lng, className, locationError }) => {
       .catch(err => {
         setMapError(true);
         mapObj.current = null;
-        setTimeout(() => setErrorFetchedChecker(c => !c), REFETCH_TIME);
       });
-  }, [lat, lng, errorFetchedChecker]);
+  }, [lat, lng, locationError]);
 
   React.useEffect(() => {
     if (!mapObj.current || typeof lat !== 'number' || typeof lng !== 'number') {
@@ -42,12 +39,20 @@ const Map = ({ lat, lng, className, locationError }) => {
     mapObj.current.setGeo(lat, lng);
   }, [lat, lng]);
 
-  return((!mapError && !locationError)
-    ? <MapContainer ref={mapContainer} className={className}></MapContainer>
-    : <Error
+  return(
+    <>
+      <MapContainer
+        ref={mapContainer}
         className={className}
-        message={locationError ? config.labels.IPify_SERVER_IS_NOT_AVAILABLE : config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE}
+        style={{display: `${(!mapError && !locationError) ? 'block' : 'none'}`}}
       />
+      {(mapError || locationError) &&
+        <Error
+          className={className}
+          message={locationError ? config.labels.IPify_SERVER_IS_NOT_AVAILABLE : config.labels.GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE}
+        />
+      }
+    </>
   )
 };
 
