@@ -26,6 +26,7 @@ const Input = styled.input.attrs(props => ({
   placeholder: config.labels.PLACEHOLDER
 }))`
   flex-grow: 1;
+  min-width: 0;
   color: #2C2C2C;
   padding-left: 24px;
   &::placeholder {
@@ -39,9 +40,11 @@ const Input = styled.input.attrs(props => ({
 const Error = styled.span`
   color: red;
   margin-right: 10px;
+  white-space: nowrap;
 `;
 
 const Button = styled.button`
+  flex-shrink: 0;
   width: 58px;
   height: 100%;
   background-color: hsl(0, 0%, 17%);
