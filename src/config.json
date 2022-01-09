@@ -1,0 +1,15 @@
+{
+  "title": "IP Address Tracker",
+  "labels": {
+    "PLACEHOLDER": "Search for any IP address or domain",
+    "IP": "IP Address",
+    "LOCATION": "Location",
+    "TIMEZONE": "Timezone",
+    "ISP": "ISP",
+    "GOOGLE_MAPS_SERVER_IS_NOT_AVAILABLE": "Google Maps server is not available",
+    "IPify_SERVER_IS_NOT_AVAILABLE": "IPify server is not available",
+    "FAILED_TO_GET_DATA": "Failed to get data",
+    "INVALID_IP_OR_DOMAIN": "Invalid IP or domain"
+  },
+  "responsiveSplitWidth": 1150
+}
