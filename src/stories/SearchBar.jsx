@@ -74,6 +74,7 @@ const SearchBar = ({ setLocation, setLocationError, className }) => {
       setLocation(newLocation);
       setLocationError(false);
       setErrorMessage('');
+      // TODO: Try reloading google maps even if it was error last time and new lat/lng is not changed from last time. Use context?
     } catch (error) {
       setErrorMessage(error.message);
     }
