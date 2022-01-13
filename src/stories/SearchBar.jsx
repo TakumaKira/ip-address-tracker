@@ -57,7 +57,14 @@ const Icon = styled.img.attrs(props => ({
   src: iconArrow
 }))``;
 
-const SearchBar = ({ setLocation, setLocationError, className }) => {
+const SearchBar = (props) => {
+  const {
+    setLocation,
+    setLocationError,
+    setMapError,
+    className,
+  } = props;
+
   const [inputValue, setInputValue] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -65,7 +72,8 @@ const SearchBar = ({ setLocation, setLocationError, className }) => {
     setErrorMessage('');
     setInputValue(e.target.value);
   };
-  const handleClick = async () => {
+  const handleSearch = async () => {
+    setMapError(false);
     if (!inputValue) {
       return;
     }
@@ -74,21 +82,20 @@ const SearchBar = ({ setLocation, setLocationError, className }) => {
       setLocation(newLocation);
       setLocationError(false);
       setErrorMessage('');
-      // TODO: Try reloading google maps even if it was error last time and new lat/lng is not changed from last time. Use context?
     } catch (error) {
       setErrorMessage(error.message);
     }
-  }
+  };
 
   return (
     <Container className={className}>
       <Input
         onChange={handleInput}
-        onKeyUp={e => e.key === 'Enter' && handleClick()}
+        onKeyUp={e => e.key === 'Enter' && handleSearch()}
       />
       {errorMessage && <Error>{errorMessage}</Error>}
       <Button
-        onClick={handleClick}
+        onClick={handleSearch}
       >
         <Icon />
       </Button>
@@ -99,6 +106,7 @@ const SearchBar = ({ setLocation, setLocationError, className }) => {
 SearchBar.propTypes = {
   setLocation: PropTypes.func,
   setLocationError: PropTypes.func,
+  setMapError: PropTypes.func,
   className: PropTypes.string,
 }
 

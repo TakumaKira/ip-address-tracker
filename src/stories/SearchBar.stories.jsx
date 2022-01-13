@@ -33,7 +33,7 @@ export const FailedToGetData = Template.bind({});
 FailedToGetData.args = {
   setLocation: () => {},
   setLocationError: () => {},
-  // TODO: Better to use context and mock it with decorator?(https://storybook.js.org/docs/react/writing-stories/decorators#context-for-mocking)
+  // TODO: Better to use context and mock it with decorator? Simply passing state is easier to test...Should this be a sample for the case?(https://storybook.js.org/docs/react/writing-stories/decorators#context-for-mocking)
 };
 FailedToGetData.parameters = {
   mockData: [

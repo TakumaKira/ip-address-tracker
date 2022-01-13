@@ -39,6 +39,7 @@ export const StyledMap = styled(Map)`
 function App() {
   const [ location, setLocation ] = React.useState({});
   const [ locationError, setLocationError ] = React.useState(false);
+  const [ mapError, setMapError ] = React.useState(false);
 
   React.useEffect(() => {
     (async function() {
@@ -59,6 +60,8 @@ function App() {
         lat={location.lat}
         lng={location.lng}
         locationError={locationError}
+        mapError={mapError}
+        setMapError={setMapError}
       />
       <StyledHeader
         ip={location.ip}
@@ -70,6 +73,7 @@ function App() {
         timezone={location.timezone}
         setLocation={setLocation}
         setLocationError={setLocationError}
+        setMapError={setMapError}
       />
     </Container>
   );

@@ -11,16 +11,25 @@ export const MapContainer = styled.div`
 `;
 
 const Map = (props) => {
-  const { lat, lng, className, locationError } = props;
+  const {
+    lat,
+    lng,
+    className,
+    locationError,
+    mapError,
+    setMapError,
+  } = props;
   const mapContainer = React.useRef(null);
   const mapObj = React.useRef(null);
-  const [mapError, setMapError] = React.useState(false);
 
   React.useEffect(() => {
     if (mapObj.current) {
       return;
     }
     if (typeof lat !== 'number' || typeof lng !== 'number') {
+      return;
+    }
+    if (mapError) {
       return;
     }
     mapObj.current = new MapClass(mapContainer.current, lat, lng, 8, locationIcon);
@@ -30,7 +39,7 @@ const Map = (props) => {
         setMapError(true);
         mapObj.current = null;
       });
-  }, [lat, lng, locationError]);
+  }, [lat, lng, locationError, mapError, setMapError]);
 
   React.useEffect(() => {
     if (!mapObj.current || typeof lat !== 'number' || typeof lng !== 'number') {
@@ -61,6 +70,8 @@ Map.propTypes = {
   lng: PropTypes.number,
   className: PropTypes.string,
   locationError: PropTypes.bool,
+  mapError: PropTypes.bool,
+  setMapError: PropTypes.func,
 };
 
 export default Map;
