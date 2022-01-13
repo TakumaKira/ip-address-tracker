@@ -59,6 +59,8 @@ test('renders HeaderBg, StyledMap and StyledHeader component', async () => {
     lat: mockLocationRaw.location.lat,
     lng: mockLocationRaw.location.lng,
     locationError: false,
+    mapError: false,
+    setMapError: expect.any(Function),
   });
   expect(styledHeaderComponent.props).toEqual({
     ip: mockLocationRaw.ip,
@@ -70,10 +72,11 @@ test('renders HeaderBg, StyledMap and StyledHeader component', async () => {
     timezone: mockLocationRaw.location.timezone,
     setLocation: expect.any(Function),
     setLocationError: expect.any(Function),
+    setMapError: expect.any(Function),
   });
 });
 
-test(`should set locationError to false and log error`, async () => {
+test(`should set locationError to true and log error`, async () => {
   const mockConsoleError = jest.spyOn(console, 'error');
   mockConsoleError.mockImplementation(() => {});
   const error = new Error('Test error');
@@ -89,6 +92,8 @@ test(`should set locationError to false and log error`, async () => {
     lat: undefined,
     lng: undefined,
     locationError: true,
+    mapError: false,
+    setMapError: expect.any(Function),
   });
   expect(styledHeaderComponent.props).toEqual({
     ip: undefined,
@@ -100,6 +105,7 @@ test(`should set locationError to false and log error`, async () => {
     timezone: undefined,
     setLocation: expect.any(Function),
     setLocationError: expect.any(Function),
+    setMapError: expect.any(Function),
   });
   expect(mockConsoleError).toBeCalledWith(error);
 });

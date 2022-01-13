@@ -42,6 +42,7 @@ const Header = (props) => {
     timezone,
     setLocation,
     setLocationError,
+    setMapError,
     className
   } = props;
 
@@ -51,6 +52,7 @@ const Header = (props) => {
       <StyledSearchBar
         setLocation={setLocation}
         setLocationError={setLocationError}
+        setMapError={setMapError}
       />
       <StyledInfoBar
         ip={ip}
@@ -72,6 +74,7 @@ Header.propTypes = {
   timezone: PropTypes.string,
   setLocation: PropTypes.func,
   setLocationError: PropTypes.func,
+  setMapError: PropTypes.func,
   className: PropTypes.string
 }
 

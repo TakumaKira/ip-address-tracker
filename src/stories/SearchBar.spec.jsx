@@ -40,10 +40,12 @@ it(`should display error when failed, then set location, set false to locationEr
   mockGetLocation.mockRejectedValueOnce(testError);
   const mockSetLocation = jest.fn();
   const mockSetLocationError = jest.fn();
-  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} />);
+  const mockSetMapError = jest.fn();
+  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} setMapError={mockSetMapError} />);
   expect(mockGetLocation).not.toBeCalled();
   expect(mockSetLocation).not.toBeCalled();
   expect(mockSetLocationError).not.toBeCalled();
+  expect(mockSetMapError).not.toBeCalled();
   expect(screen.queryByText(testError.message)).not.toBeInTheDocument();
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button');
@@ -56,6 +58,9 @@ it(`should display error when failed, then set location, set false to locationEr
     expect(screen.queryByText(testError.message)).not.toBeInTheDocument();
   });
   fireEvent.click(button); // First search -> Network or invalid query error
+  await waitFor(() => {
+    expect(mockSetMapError).toBeCalledWith(false);
+  });
   await waitFor(() => {
     expect(mockGetLocation).toBeCalledTimes(1);
   });
@@ -72,6 +77,9 @@ it(`should display error when failed, then set location, set false to locationEr
     expect(screen.getByText(testError.message)).toBeInTheDocument();
   });
   fireEvent.click(button); // Second search -> Success(query was not invalid actually)
+  await waitFor(() => {
+    expect(mockSetMapError).toBeCalledWith(false);
+  });
   await waitFor(() => {
     expect(mockGetLocation).toBeCalledTimes(2);
   });
@@ -100,7 +108,8 @@ it(`should remove error message if user input something new`, async () => {
   mockGetLocation.mockRejectedValueOnce(testError);
   const mockSetLocation = jest.fn();
   const mockSetLocationError = jest.fn();
-  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} />);
+  const mockSetMapError = jest.fn();
+  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} setMapError={mockSetMapError} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button');
   const inputValue = '123';
@@ -122,7 +131,8 @@ it(`should start searching when pushing enter key`, async () => {
   mockGetLocation.mockResolvedValue(mockLocation);
   const mockSetLocation = jest.fn();
   const mockSetLocationError = jest.fn();
-  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} />);
+  const mockSetMapError = jest.fn();
+  render(<SearchBar setLocation={mockSetLocation} setLocationError={mockSetLocationError} setMapError={mockSetMapError} />);
   const input = screen.getByRole('textbox');
   const inputValue = '123';
   fireEvent.change(input, { target: { value: inputValue } });
@@ -136,7 +146,8 @@ it(`should start searching when pushing enter key`, async () => {
 });
 
 it(`should do nothing if input is empty and click or enter`, async () => {
-  render(<SearchBar />);
+  const mockSetMapError = jest.fn();
+  render(<SearchBar setMapError={mockSetMapError} />);
   const input = screen.getByRole('textbox');
   const inputValue = '';
   fireEvent.change(input, { target: { value: inputValue } });

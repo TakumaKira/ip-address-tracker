@@ -19,6 +19,7 @@ Default.args = {
   lat: 37.40599,
   lng: -122.078514,
   locationError: false,
+  setMapError: () => {},
 };
 
 export const LocationError = Template.bind({});
@@ -26,6 +27,7 @@ LocationError.args = {
   lat: undefined,
   lng: undefined,
   locationError: true,
+  setMapError: () => {},
 };
 
 export const GoogleMapsError = Template.bind({});
@@ -33,6 +35,7 @@ GoogleMapsError.args = {
   lat: 37.40599,
   lng: -122.078514,
   locationError: false,
+  setMapError: () => {},
 };
 GoogleMapsError.parameters = {
   mockData: [
