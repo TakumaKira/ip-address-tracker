@@ -1,7 +1,8 @@
 import * as validator from 'ip-validator';
 import config from '../config.json';
+import GeoServiceUrlGenerator from './geoServiceUrlGenerator';
 import * as http from './http';
-import getLocation, { BASE_URL, PARAM_API_KEY, PATH } from './location';
+import getLocation from './location';
 import processLocation from './processLocation';
 
 let mockGet;
@@ -50,13 +51,22 @@ it(`should resolve processed location object when success`, async () => {
   };
   mockGet.mockResolvedValue(location);
   await expect(getLocation()).resolves.toEqual(processLocation(location));
-  expect(mockGet).toHaveBeenLastCalledWith(`${BASE_URL}/${PATH}?${PARAM_API_KEY}`);
+  const urlGenerator1 = new GeoServiceUrlGenerator();
+  expect(mockGet).toHaveBeenLastCalledWith(urlGenerator1.getUrl());
+
+  const urlGenerator2 = new GeoServiceUrlGenerator();
+  urlGenerator2.PARAMS.IP_ADDRESS.value = validIPv4;
   await expect(getLocation(validIPv4)).resolves.toEqual(processLocation(location));
-  expect(mockGet).toHaveBeenLastCalledWith(`${BASE_URL}/${PATH}?${PARAM_API_KEY}&ipAddress=${validIPv4}`);
+  expect(mockGet).toHaveBeenLastCalledWith(urlGenerator2.getUrl());
+
+  urlGenerator2.PARAMS.IP_ADDRESS.value = validIPv6;
   await expect(getLocation(validIPv6)).resolves.toEqual(processLocation(location));
-  expect(mockGet).toHaveBeenLastCalledWith(`${BASE_URL}/${PATH}?${PARAM_API_KEY}&ipAddress=${validIPv6}`);
+  expect(mockGet).toHaveBeenLastCalledWith(urlGenerator2.getUrl());
+
+  const urlGenerator3 = new GeoServiceUrlGenerator();
+  urlGenerator3.PARAMS.DOMAIN.value = validDomain;
   await expect(getLocation(validDomain)).resolves.toEqual(processLocation(location));
-  expect(mockGet).toHaveBeenLastCalledWith(`${BASE_URL}/${PATH}?${PARAM_API_KEY}&domain=${validDomain}`);
+  expect(mockGet).toHaveBeenLastCalledWith(urlGenerator3.getUrl());
 });
 
 it(`should reject error if failed`, async () => {
