@@ -1,4 +1,4 @@
-import { rest } from 'msw'
+import { rest } from 'msw';
 import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
 
 const urlGenerator = new GeoServiceUrlGenerator();
@@ -98,6 +98,11 @@ const ipSearchHandler = rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ct
   );
 });
 
+const mapHandler = rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+  return res;
+});
+
 export const handlers = [
   ipSearchHandler,
+  mapHandler,
 ]
