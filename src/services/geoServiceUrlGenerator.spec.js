@@ -27,4 +27,5 @@ it(`should return expected values and allow and forbid to set each value respect
   const urlGenerator2 = new GeoServiceUrlGenerator();
   expect(() => urlGenerator2.PARAMS.DOMAIN.value = 'other').not.toThrow();
   expect(urlGenerator2.getUrl()).toBe(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_IPIFY_API_KEY}&domain=other`);
+  expect(() => urlGenerator2.PARAMS.IP_ADDRESS.value = 'other').toThrowError(new Error('IP_ADDRESS cannot be set when DOMAIN is not empty'));
 });

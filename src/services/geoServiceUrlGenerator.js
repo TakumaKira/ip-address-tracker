@@ -43,7 +43,7 @@ export default class GeoServiceUrlGenerator {
   };
   #getValidParams = function() {
     if (Object.keys(this.PARAMS)[0] !== 'API_KEY') {
-      throw new Error('API_KEY must be first in PARAMS');
+      throw new Error('API_KEY must be first in PARAMS'); // This line cannot be tested. Works only if someone move/remove API_KEY.
     }
     return Object.values(this.PARAMS) // [{name:'paramName1', value:'paramValue1'}, {name:'paramName2', value:'paramValue2'}, {name:'paramName3', value:''}, ...]
       .filter(param => param.value !== ''); // [{name:'paramName1', value:'paramValue1'}, {name:'paramName2', value:'paramValue2'}, ...]
