@@ -1,52 +1,55 @@
-import withMock from 'storybook-addon-mock';
-import { BASE_URL, PATH } from '../services/location';
+import { rest } from 'msw';
+import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
 import SearchBar from './SearchBar';
 
 export default {
   title: 'SearchBar',
   component: SearchBar,
-  decorators: [withMock],
 };
 
 const Template = (args) => <SearchBar {...args} />;
+
+const urlGenerator = new GeoServiceUrlGenerator();
 
 export const Default = Template.bind({});
 Default.args = {
   setLocation: () => {},
   setLocationError: () => {},
+  setMapError: () => {},
 };
 Default.parameters = {
-  mockData: [
-    {
-      url: `${BASE_URL}/${PATH}`,
-      method: 'GET',
-      status: 200,
-      response: (request) => ({
-        data: 'Default data',
+  msw: {
+    handlers: [
+      rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ctx) => {
+        return res(
+          ctx.status(200),
+          ctx.json({
+            content: "Doesn't matter"
+          }),
+        );
       }),
-      ignoreParams: true // TODO: Work on the issue of storybook-addon-mock to avoid accessing real API without clicking true of the radio button(https://github.com/nutboltu/storybook-addon-mock/issues/78)
-    },
-  ],
+    ]
+  },
 };
 
 export const FailedToGetData = Template.bind({});
 FailedToGetData.args = {
   setLocation: () => {},
   setLocationError: () => {},
+  setMapError: () => {},
   // TODO: Better to use context and mock it with decorator? Simply passing state is easier to test...Should this be a sample for the case?(https://storybook.js.org/docs/react/writing-stories/decorators#context-for-mocking)
 };
 FailedToGetData.parameters = {
-  mockData: [
-    {
-      url: `${BASE_URL}/${PATH}`,
-      method: 'GET',
-      status: 500,
-      response: (request) => ({
-        data: 'Server error',
+  msw: {
+    handlers: [
+      rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ctx) => {
+        return res(
+          ctx.status(503),
+          ctx.json({
+            message: 'Service Unavailable'
+          })
+        );
       }),
-      ignoreParams: true // TODO: Work on the issue of storybook-addon-mock to avoid accessing real API without clicking true of the radio button(https://github.com/nutboltu/storybook-addon-mock/issues/78)
-    },
-  ],
+    ]
+  },
 };
-
-// TODO: Or use MSW(https://mswjs.io/) for better mock control

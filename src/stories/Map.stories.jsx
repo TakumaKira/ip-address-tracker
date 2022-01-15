@@ -1,4 +1,4 @@
-import withMock from 'storybook-addon-mock';
+import { rest } from 'msw';
 import styled from 'styled-components';
 import Map from './Map';
 
@@ -9,7 +9,6 @@ const StyledMap = styled(Map)`
 export default {
   title: 'Map/Map',
   component: Map,
-  decorators: [withMock],
 };
 
 const Template = (args) => <StyledMap {...args} />;
@@ -21,6 +20,15 @@ Default.args = {
   locationError: false,
   setMapError: () => {},
 };
+Default.parameters = {
+  msw: {
+    handlers: [
+      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+        return res;
+      }),
+    ]
+  },
+};
 
 export const LocationError = Template.bind({});
 LocationError.args = {
@@ -28,6 +36,15 @@ LocationError.args = {
   lng: undefined,
   locationError: true,
   setMapError: () => {},
+};
+LocationError.parameters = {
+  msw: {
+    handlers: [
+      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+        return res;
+      }),
+    ]
+  },
 };
 
 export const GoogleMapsError = Template.bind({});
@@ -38,17 +55,16 @@ GoogleMapsError.args = {
   setMapError: () => {},
 };
 GoogleMapsError.parameters = {
-  mockData: [
-    {
-      url: `https://maps.googleapis.com/maps/api/js`,
-      method: 'GET',
-      status: 500, // TODO: Get rejection in my code
-      response: (request) => ({
-        data: 'Server error',
+  msw: {
+    handlers: [
+      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+        return res(
+          ctx.status(503),
+          ctx.json({
+            message: 'Service Unavailable' // TODO: Somehow this mock doesn't work
+          })
+        );
       }),
-      ignoreParams: true // TODO: Work on the issue of storybook-addon-mock to avoid accessing real API without clicking true of the radio button(https://github.com/nutboltu/storybook-addon-mock/issues/78)
-    },
-  ],
+    ]
+  },
 };
-
-// TODO: Or use MSW(https://mswjs.io/) for better mock control
