@@ -1,5 +1,6 @@
 import * as validator from 'ip-validator';
 import config from '../config.json';
+import google8888Ip from '../mockResponseData/google8888Ip.json';
 import GeoServiceUrlGenerator from './geoServiceUrlGenerator';
 import * as http from './http';
 import getLocation from './location';
@@ -21,51 +22,23 @@ beforeEach(() => {
 });
 
 it(`should resolve processed location object when success`, async () => {
-  const location = {
-    ip: '8.8.8.8',
-    location: {
-      country: 'US',
-      region: 'California',
-      city: 'Mountain View',
-      lat: 37.40599,
-      lng: -122.078514,
-      postalCode: '94043',
-      timezone: '-07:00',
-      geonameId: 5375481
-    },
-    domains: [
-      '0d2.net',
-      '003725.com',
-      '0f6.b0094c.cn',
-      '007515.com',
-      '0guhi.jocose.cn'
-    ],
-    as: {
-      asn: 15169,
-      name: 'Google LLC',
-      route: '8.8.8.0/24',
-      domain: 'https://about.google/intl/en/',
-      type: 'Content'
-    },
-    isp: 'Google LLC'
-  };
-  mockGet.mockResolvedValue(location);
-  await expect(getLocation()).resolves.toEqual(processLocation(location));
+  mockGet.mockResolvedValue(google8888Ip);
+  await expect(getLocation()).resolves.toEqual(processLocation(google8888Ip));
   const urlGenerator1 = new GeoServiceUrlGenerator();
   expect(mockGet).toHaveBeenLastCalledWith(urlGenerator1.getUrl());
 
   const urlGenerator2 = new GeoServiceUrlGenerator();
   urlGenerator2.PARAMS.IP_ADDRESS.value = validIPv4;
-  await expect(getLocation(validIPv4)).resolves.toEqual(processLocation(location));
+  await expect(getLocation(validIPv4)).resolves.toEqual(processLocation(google8888Ip));
   expect(mockGet).toHaveBeenLastCalledWith(urlGenerator2.getUrl());
 
   urlGenerator2.PARAMS.IP_ADDRESS.value = validIPv6;
-  await expect(getLocation(validIPv6)).resolves.toEqual(processLocation(location));
+  await expect(getLocation(validIPv6)).resolves.toEqual(processLocation(google8888Ip));
   expect(mockGet).toHaveBeenLastCalledWith(urlGenerator2.getUrl());
 
   const urlGenerator3 = new GeoServiceUrlGenerator();
   urlGenerator3.PARAMS.DOMAIN.value = validDomain;
-  await expect(getLocation(validDomain)).resolves.toEqual(processLocation(location));
+  await expect(getLocation(validDomain)).resolves.toEqual(processLocation(google8888Ip));
   expect(mockGet).toHaveBeenLastCalledWith(urlGenerator3.getUrl());
 });
 

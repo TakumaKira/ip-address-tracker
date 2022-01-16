@@ -1,6 +1,7 @@
 import React from 'react';
 import ShallowRenderer from 'react-test-renderer/shallow';
 import App, { HeaderBg, StyledHeader, StyledMap } from './App';
+import google8888Ip from './mockResponseData/google8888Ip.json';
 import * as getLocation from './services/location';
 import processLocation from './services/processLocation';
 
@@ -19,57 +20,29 @@ afterEach(() => {
 });
 
 test('renders HeaderBg, StyledMap and StyledHeader component', async () => {
-  const mockLocationRaw = {
-    ip: '8.8.8.8',
-    location: {
-      country: 'US',
-      region: 'California',
-      city: 'Mountain View',
-      lat: 37.40599,
-      lng: -122.078514,
-      postalCode: '94043',
-      timezone: '-07:00',
-      geonameId: 5375481
-    },
-    domains: [
-      '0d2.net',
-      '003725.com',
-      '0f6.b0094c.cn',
-      '007515.com',
-      '0guhi.jocose.cn'
-    ],
-    as: {
-      asn: 15169,
-      name: 'Google LLC',
-      route: '8.8.8.0/24',
-      domain: 'https://about.google/intl/en/',
-      type: 'Content'
-    },
-    isp: 'Google LLC'
-  };
-  mockGetLocation.mockResolvedValue(processLocation(mockLocationRaw));
+  mockGetLocation.mockResolvedValue(processLocation(google8888Ip));
   const renderer = new ShallowRenderer();
   renderer.render(<App />);
-  await expect(mockGetLocation()).resolves.toEqual(processLocation(mockLocationRaw));
+  await expect(mockGetLocation()).resolves.toEqual(processLocation(google8888Ip));
   const { props: { children: [headerBgComponent, styledMapComponent, styledHeaderComponent] } } = renderer.getRenderOutput();
   expect(headerBgComponent.type).toEqual(HeaderBg);
   expect(styledMapComponent.type).toEqual(StyledMap);
   expect(styledHeaderComponent.type).toEqual(StyledHeader);
   expect(styledMapComponent.props).toEqual({
-    lat: mockLocationRaw.location.lat,
-    lng: mockLocationRaw.location.lng,
+    lat: google8888Ip.location.lat,
+    lng: google8888Ip.location.lng,
     locationError: false,
     mapError: false,
     setMapError: expect.any(Function),
   });
   expect(styledHeaderComponent.props).toEqual({
-    ip: mockLocationRaw.ip,
-    isp: mockLocationRaw.isp,
-    city: mockLocationRaw.location.city,
-    country: mockLocationRaw.location.country,
-    postalCode: mockLocationRaw.location.postalCode,
-    region: mockLocationRaw.location.region,
-    timezone: mockLocationRaw.location.timezone,
+    ip: google8888Ip.ip,
+    isp: google8888Ip.isp,
+    city: google8888Ip.location.city,
+    country: google8888Ip.location.country,
+    postalCode: google8888Ip.location.postalCode,
+    region: google8888Ip.location.region,
+    timezone: google8888Ip.location.timezone,
     setLocation: expect.any(Function),
     setLocationError: expect.any(Function),
     setMapError: expect.any(Function),

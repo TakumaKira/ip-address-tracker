@@ -1,0 +1,28 @@
+{
+  "ip": "142.250.176.14",
+  "location": {
+    "country": "US",
+    "region": "California",
+    "city": "Los Angeles",
+    "lat": 34.05223,
+    "lng": -118.24368,
+    "postalCode": "90001",
+    "timezone": "-08:00",
+    "geonameId": 5368361
+  },
+  "domains": [
+      "3tar.xyz",
+      "7liils679b.com",
+      "cobwerks.com",
+      "filmstrek.cam",
+      "gbbo.co.uk"
+  ],
+  "as": {
+    "asn": 15169,
+    "name": "GOOGLE",
+    "route": "142.250.0.0/15",
+    "domain": "https://about.google/intl/en/",
+    "type": "Content"
+  },
+  "isp": "Google LLC"
+}

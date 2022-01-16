@@ -1,5 +1,6 @@
-import Info from './Info';
 import config from '../config.json';
+import PREVIEW_LABELS from './constants/previewLabels';
+import Info from './Info';
 
 export default {
   title: 'Info',
@@ -11,23 +12,23 @@ const Template = (args) => <Info {...args} />;
 export const IP = Template.bind({});
 IP.args = {
   title: config.labels.IP,
-  data: '192.212.174.101',
+  data: PREVIEW_LABELS.ip,
 };
 
 export const Location = Template.bind({});
 Location.args = {
   title: config.labels.LOCATION,
-  data: 'Brooklyn, NY 10001',
+  data: PREVIEW_LABELS.location,
 };
 
 export const Timezone = Template.bind({});
 Timezone.args = {
   title: config.labels.TIMEZONE,
-  data: 'UTC -05:00',
+  data: PREVIEW_LABELS.timezone,
 };
 
 export const ISP = Template.bind({});
 ISP.args = {
   title: config.labels.ISP,
-  data: 'SpaceX Starlink',
+  data: PREVIEW_LABELS.isp,
 };

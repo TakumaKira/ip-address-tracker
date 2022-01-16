@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import styled from 'styled-components';
+import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
 import Map from './Map';
 
 const StyledMap = styled(Map)`
@@ -59,10 +60,8 @@ GoogleMapsError.parameters = {
     handlers: [
       rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
         return res(
-          ctx.status(503),
-          ctx.json({
-            message: 'Service Unavailable' // TODO: Somehow this mock doesn't work
-          })
+          ctx.status(503), // TODO: Somehow this mock doesn't work
+          ctx.json(serviceUnavailable503),
         );
       }),
     ]

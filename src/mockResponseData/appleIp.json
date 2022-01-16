@@ -1,0 +1,24 @@
+{
+  "ip": "17.0.0.0",
+  "location": {
+    "country": "US",
+    "region": "California",
+    "city": "Cupertino",
+    "lat": 37.323,
+    "lng": -122.03218,
+    "postalCode": "95014",
+    "timezone": "-08:00",
+    "geonameId": 5341145
+  },
+  "domains": [
+      "picch.us"
+  ],
+  "as": {
+    "asn": 714,
+    "name": "APPLE-ENGINEERING",
+    "route": "17.0.0.0/21",
+    "domain": "https://www.apple.com/support/systemstatus/",
+    "type": "Content"
+  },
+  "isp": "Apple Inc."
+}
