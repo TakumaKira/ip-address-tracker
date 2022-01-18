@@ -23,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.span`
+export const Title = styled.span`
   text-transform: uppercase;
   opacity: 0.5;
   font-weight: 700;
@@ -35,7 +35,7 @@ const Title = styled.span`
   }
 `;
 
-const Data = styled.span`
+export const Data = styled.span`
   font-weight: 500;
   @media screen and (max-width: ${config.responsiveSplitWidth - 1}px) {
     font-size: 20px;

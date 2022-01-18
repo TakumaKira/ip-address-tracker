@@ -5,8 +5,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 if (process.env.REACT_APP_MOCK_API === 'true') {
-  const { worker } = require('./mocks/browser')
-  worker.start()
+  const { worker } = require('./mocks/browser');
+  worker.start();
 }
 
 ReactDOM.render(

@@ -1,3 +1,4 @@
+import PREVIEW_LABELS from './constants/previewLabels';
 import InfoBar from './InfoBar';
 
 export default {
@@ -9,10 +10,10 @@ const Template = (args) => <InfoBar {...args} />;
 
 export const Sample = Template.bind({});
 Sample.args = {
-  ip: '192.212.174.101',
-  location: 'Brooklyn, NY 10001',
-  timezone: 'UTC -05:00',
-  isp: 'SpaceX Starlink',
+  ip: PREVIEW_LABELS.ip,
+  location: PREVIEW_LABELS.location,
+  timezone: PREVIEW_LABELS.timezone,
+  isp: PREVIEW_LABELS.isp,
 };
 
 export const Empty = Template.bind({});

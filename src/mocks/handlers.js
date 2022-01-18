@@ -1,4 +1,9 @@
 import { rest } from 'msw';
+import appleIp from '../../src/mockResponseData/appleIp.json';
+import google8888Ip from '../../src/mockResponseData/google8888Ip.json';
+import googleIp from '../../src/mockResponseData/googleIp.json';
+import config from '../config.json';
+import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
 import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
 
 const urlGenerator = new GeoServiceUrlGenerator();
@@ -17,88 +22,41 @@ const ipSearchHandler = rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ct
     );
   }
 
-  // Mock ip search for 8.8.8.8(google)
   const ipAddress = req.url.searchParams.get(urlGenerator.PARAMS.IP_ADDRESS.name);
+  const domain = req.url.searchParams.get(urlGenerator.PARAMS.DOMAIN.name);
+
+  // Mock ip search for initial loading
+  if (!ipAddress && !domain) {
+    return res(
+      ctx.status(200),
+      ctx.json(appleIp),
+    );
+  }
+
+  // Mock ip search for 8.8.8.8(google)
   if (ipAddress === '8.8.8.8') {
     return res(
       ctx.status(200),
-      ctx.json({
-        ip: '8.8.8.8',
-        location: {
-          country: 'US',
-          region: 'California',
-          city: 'Mountain View',
-          lat: 37.40599,
-          lng: -122.078514,
-          postalCode: '94043',
-          timezone: '-07:00',
-          geonameId: 5375481
-        },
-        domains: [
-          '0d2.net',
-          '003725.com',
-          '0f6.b0094c.cn',
-          '007515.com',
-          '0guhi.jocose.cn'
-        ],
-        as: {
-          asn: 15169,
-          name: 'Google LLC',
-          route: '8.8.8.0/24',
-          domain: 'https://about.google/intl/en/',
-          type: 'Content'
-        },
-        isp: 'Google LLC'
-      }),
+      ctx.json(google8888Ip),
     );
   }
 
   // Mock ip search for google.com
-  const domain = req.url.searchParams.get(urlGenerator.PARAMS.DOMAIN.name);
   if (domain === 'google.com') {
     return res(
       ctx.status(200),
-      ctx.json({
-        ip: '142.250.176.14',
-        location: {
-          country: 'US',
-          region: 'California',
-          city: 'Los Angeles',
-          lat: 34.05223,
-          lng: -118.24368,
-          postalCode: '90001',
-          timezone: '-08:00',
-          geonameId: 5368361
-        },
-        domains: [
-            '3tar.xyz',
-            '7liils679b.com',
-            'cobwerks.com',
-            'filmstrek.cam',
-            'gbbo.co.uk'
-        ],
-        as: {
-          asn: 15169,
-          name: 'GOOGLE',
-          route: '142.250.0.0/15',
-          domain: 'https://about.google/intl/en/',
-          type: 'Content'
-        },
-        isp: 'Google LLC'
-      })
+      ctx.json(googleIp),
     );
   }
 
   // Mock service unavailable for the rest of valid search.
   return res(
     ctx.status(503),
-    ctx.json({
-      message: 'Service Unavailable'
-    })
+    ctx.json(serviceUnavailable503),
   );
 });
 
-const mapHandler = rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+const mapHandler = rest.get(`${config.apiEndPointUrls.GOOGLE_MAPS}`, (req, res, ctx) => {
   return res;
 });
 

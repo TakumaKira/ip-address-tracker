@@ -13,9 +13,17 @@ const Container = styled.div`
   @media screen and (min-width: ${config.responsiveSplitWidth}px) {
     width: 555px;
   }
-  background-color: #FFFFFF;
   border-radius: 15px;
   overflow: hidden;
+
+  display: flex;
+`;
+
+const BgContainer = styled.div`
+  height: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  background-color: #FFFFFF;
 
   display: flex;
   align-items: center;
@@ -88,14 +96,20 @@ const SearchBar = (props) => {
   };
 
   return (
-    <Container className={className}>
-      <Input
-        onChange={handleInput}
-        onKeyUp={e => e.key === 'Enter' && handleSearch()}
-      />
-      {errorMessage && <Error>{errorMessage}</Error>}
+    <Container
+      className={className}
+      data-cy="searchBar"
+    >
+      <BgContainer>
+        <Input
+          onChange={handleInput}
+          onKeyUp={e => e.key === 'Enter' && handleSearch()}
+        />
+        {errorMessage && <Error>{errorMessage}</Error>}
+      </BgContainer>
       <Button
         onClick={handleSearch}
+        data-cy="submit"
       >
         <Icon />
       </Button>

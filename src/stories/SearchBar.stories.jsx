@@ -1,4 +1,5 @@
 import { rest } from 'msw';
+import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
 import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
 import SearchBar from './SearchBar';
 
@@ -7,9 +8,9 @@ export default {
   component: SearchBar,
 };
 
-const Template = (args) => <SearchBar {...args} />;
-
 const urlGenerator = new GeoServiceUrlGenerator();
+
+const Template = (args) => <SearchBar {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -45,9 +46,7 @@ FailedToGetData.parameters = {
       rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ctx) => {
         return res(
           ctx.status(503),
-          ctx.json({
-            message: 'Service Unavailable'
-          })
+          ctx.json(serviceUnavailable503)
         );
       }),
     ]
