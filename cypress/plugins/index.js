@@ -34,6 +34,8 @@ function ensureRdpPort (args) {
 let port = 0
 let client = null
 
+const injectDevServer = require("@cypress/react/plugins/react-scripts")
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -41,6 +43,8 @@ let client = null
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  injectDevServer(on, config)
+
   on('before:browser:launch', (browser, launchOptionsOrArgs) => {
     debug('browser launch args or options %o', launchOptionsOrArgs)
     const args = Array.isArray(launchOptionsOrArgs) ? launchOptionsOrArgs : launchOptionsOrArgs.args
@@ -91,5 +95,6 @@ module.exports = (on, config) => {
 
   config.env = process.env;
   config.env.REACT_APP_MOCK_API = 'true';
+
   return config;
 }
