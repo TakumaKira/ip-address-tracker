@@ -11,5 +11,8 @@
     "FAILED_TO_GET_DATA": "Failed to get data",
     "INVALID_IP_OR_DOMAIN": "Invalid IP or domain"
   },
+  "apiEndPointUrls": {
+    "GOOGLE_MAPS": "https://maps.googleapis.com/maps/api/js"
+  },
   "responsiveSplitWidth": 1150
 }

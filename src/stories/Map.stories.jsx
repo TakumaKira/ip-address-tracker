@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import styled from 'styled-components';
+import config from '../config.json';
 import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
 import Map from './Map';
 
@@ -24,7 +25,7 @@ Default.args = {
 Default.parameters = {
   msw: {
     handlers: [
-      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+      rest.get(`${config.apiEndPointUrls.GOOGLE_MAPS}`, (req, res, ctx) => {
         return res;
       }),
     ]
@@ -38,15 +39,6 @@ LocationError.args = {
   locationError: true,
   setMapError: () => {},
 };
-LocationError.parameters = {
-  msw: {
-    handlers: [
-      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
-        return res;
-      }),
-    ]
-  },
-};
 
 export const GoogleMapsError = Template.bind({});
 GoogleMapsError.args = {
@@ -58,7 +50,7 @@ GoogleMapsError.args = {
 GoogleMapsError.parameters = {
   msw: {
     handlers: [
-      rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+      rest.get(`${config.apiEndPointUrls.GOOGLE_MAPS}`, (req, res, ctx) => {
         return res(
           ctx.status(503), // TODO: Somehow this mock doesn't work
           ctx.json(serviceUnavailable503),

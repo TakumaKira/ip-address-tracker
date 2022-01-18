@@ -1,9 +1,10 @@
 import { rest } from 'msw';
-import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
-import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
+import appleIp from '../../src/mockResponseData/appleIp.json';
 import google8888Ip from '../../src/mockResponseData/google8888Ip.json';
 import googleIp from '../../src/mockResponseData/googleIp.json';
-import appleIp from '../../src/mockResponseData/appleIp.json';
+import config from '../config.json';
+import serviceUnavailable503 from '../mockResponseData/serviceUnavailable503.json';
+import GeoServiceUrlGenerator from '../services/geoServiceUrlGenerator';
 
 const urlGenerator = new GeoServiceUrlGenerator();
 
@@ -55,7 +56,7 @@ const ipSearchHandler = rest.get(`${urlGenerator.BASE_URL}/:path`, (req, res, ct
   );
 });
 
-const mapHandler = rest.get(`https://maps.googleapis.com/:path`, (req, res, ctx) => {
+const mapHandler = rest.get(`${config.apiEndPointUrls.GOOGLE_MAPS}`, (req, res, ctx) => {
   return res;
 });
 
