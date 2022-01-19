@@ -11,6 +11,7 @@ This is a solution to the [IP address tracker challenge on Frontend Mentor](http
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
 
@@ -43,14 +44,30 @@ Users should be able to:
 - [React](https://reactjs.org/) - JS library
 - [Styled Components](https://styled-components.com/) - For styles
 - Storybook
+- MSW
 - Jest
 - Cypress
 
 ### What I learned
 
+- How to use Storybook with Chromatic
+- How to use styled-components
+- How to use Google Maps JavaScript API
+- How to use IPify API
+- How to secure my API key as much as possible
+
+### Continued development
+
+- I still can't mock the access to Google Maps API through `@googlemaps/js-api-loader` firmly. It looks like this causes freaky Cypress E2E testing results. I need more investigation. I might be able to [contribute this](https://github.com/googlemaps/js-api-loader/blob/main/CONTRIBUTING.md).
+- Mocking in Storybook with `storybook-addon-mock` didn't work well for this, so I moved to MSW. But I might be able to [contribute this](https://github.com/nutboltu/storybook-addon-mock).
+- I choose passing React state for some components for the sake of testing in Storybook for this project, but it might also be good to [mocking context](https://storybook.js.org/docs/react/writing-stories/decorators#context-for-mocking).
+- After installing MSW, I needed to add `GENERATE_SOURCEMAP=false` to my `react-scripts start` script to silent the error([The discussion is here](https://github.com/mswjs/msw/issues/1030)). It doesn't look preventing development for now, but I want a better solution. This involves webpack transpile.
+- I wanted to try [component testing with Cypress](https://www.cypress.io/blog/2021/04/06/cypress-component-testing-react/), but it didn't work. This involves webpack transpile. I need more investigation.
+
 ### Useful resources
 
 - [Storybook for React tutorial](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/) - This is a great tutorial to learn how Storybook helps Component Driven Development.
+- [reactjs - Is API key exposed through get request_ - Stack Overflow](https://stackoverflow.com/questions/66929478/is-api-key-exposed-through-get-request) - This gave me a general overview of securing API key.
 
 ## Author
 
