@@ -51,7 +51,9 @@ const Error = styled.span`
   white-space: nowrap;
 `;
 
-const Button = styled.button`
+const Button = styled.button.attrs(props => ({
+  ariaLabel: 'Search',
+}))`
   flex-shrink: 0;
   width: 58px;
   height: 100%;
@@ -62,7 +64,8 @@ const Button = styled.button`
 `;
 
 const Icon = styled.img.attrs(props => ({
-  src: iconArrow
+  src: iconArrow,
+  alt: 'arrow icon',
 }))``;
 
 const SearchBar = (props) => {
